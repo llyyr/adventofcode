@@ -1,4 +1,4 @@
-inp = [l.rstrip() for l in open('03.txt').readlines()]
+inp = [l.rstrip() for l in open('03.txt')]
 W = len(inp[0])
 
 # Part 1
