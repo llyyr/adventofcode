@@ -1,10 +1,9 @@
 #!/usr/bin/env python3.10
-inp = [list(map(int, l.replace('->', ',').split(','))) for l in open('05.txt')]
+inp = [(*map(int, l.replace('->', ',').split(',')),) for l in open(0)]
 
 def solve(p2=False):
     grid = {}
-    for l in inp:
-        x1, y1, x2, y2 = l
+    for x1, y1, x2, y2 in inp:
         if x1 == x2:
             for y in range(min(y1, y2), max(y1, y2) + 1):
                 grid[(x1, y)] = 1 if (x1, y) not in grid else grid[(x1, y)] + 1
