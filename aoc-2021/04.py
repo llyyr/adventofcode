@@ -1,4 +1,4 @@
-#!/usr/bin/python3.9
+#!/usr/bin/env python3.9
 from itertools import product
 
 inp = open('04.txt').read().rstrip().split('\n\n')
