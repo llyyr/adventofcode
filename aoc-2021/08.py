@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.10
 from itertools import permutations
 
-inp = [[l.split() for l in l.split('|')] for l in open(0)]
+inp = [[*map(str.split, l.split('|'))] for l in open(0)]
 MAP = [
     set('abcefg'),  # 0
     set('cf'),      # 1
