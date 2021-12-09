@@ -11,7 +11,7 @@ def solve():
         for c in range(C):
             p = inp[r][c]
             m = True
-            for rr, cc in [(r-1, c), (r, c+1), (r+1, c), (r, c-1)]:
+            for rr, cc in ((r-1, c), (r, c+1), (r+1, c), (r, c-1)):
                 if 0<=cc<C and 0<=rr<R and inp[rr][cc]<=p:
                     m = False
             if m:
