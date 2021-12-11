@@ -1,4 +1,4 @@
-from collections import _count_elements as C
+from _collections import _count_elements as C
 
 #cipher = {49: 8, 37: 5, 34: 2, 39: 3, 25: 7, 45: 9, 41: 6, 30: 4, 42: 0, 17: 1}
 

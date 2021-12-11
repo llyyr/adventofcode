@@ -5,6 +5,8 @@ p1 = sum(abs(i-median) for i in inp)
 
 mean = sum(inp) // len(inp)
 C2 = lambda x: (x*(x+1))//2
-p2 = sum(C2(abs(i-mean)) for i in inp)
+p2 = [sum(C2(abs(i-mean+1)) for i in inp),
+      sum(C2(abs(i-mean-1)) for i in inp),
+      sum(C2(abs(i-mean)) for i in inp)]
 
-print(p1, p2)
+print(p1, min(p2))
