@@ -2,13 +2,9 @@
 from collections import Counter
 
 def solve():
-    tmp, rules = open(0).read().split('\n\n')
-    r = dict(l.split(' -> ') for l in rules.splitlines())
-
-    pairs = Counter()
-    for x, y in zip(tmp, tmp[1:]):
-        pairs.update([x + y])
-
+    tmp, _, *rules = open(0).read().splitlines()
+    r = dict(l.split(' -> ') for l in rules)
+    pairs = Counter(x + y for x, y in zip(tmp, tmp[1:]))
     for t in range(1, 41):
         npairs = Counter()
         for p in pairs:
