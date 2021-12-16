@@ -15,13 +15,13 @@ def solve(risk, tiles):
         cost, r, c = hq.heappop(Q)
         if visited[r][c]:
             continue
-        if (r+1, c+1) == (len(risk), len(risk[r])):
-            return cost
+        if (r, c) == (len(risk)-1, len(risk[r])-1):
+            break
         visited[r][c] = True
         for rr, cc in ((r-1, c), (r+1, c), (r, c-1), (r, c+1)):
             if len(risk)>rr>=0<=cc<len(risk[0]) and not visited[rr][cc]:
                 hq.heappush(Q, (cost + risk[rr][cc], rr, cc))
-
+    return cost
 inp = [list(map(int, l.strip())) for l in open(0)]
 print(solve(inp, 1))
 print(solve(inp, 5))
