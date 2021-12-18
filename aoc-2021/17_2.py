@@ -4,11 +4,7 @@ from collections import defaultdict
 
 def solve():
     xmin, xmax, ymin, ymax = 195, 238, -93, -67 # input
-    #xmin, xmax, ymin, ymax = 2000, 2039, -9960, -9956 # smol bigboy
-    #xmin, xmax, ymin, ymax = 22000, 22045, -99960, -99956 # bigger bigboy
-
     print(ymin*(ymin+1)//2)
-
     y_map = set()
     for y in range(1, -ymin+1):
         for x in range(y):
