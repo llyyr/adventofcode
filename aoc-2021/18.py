@@ -3,7 +3,6 @@ from itertools import permutations
 from math import floor, ceil
 from json import loads
 
-
 class Num:
     def __init__(self, val):
         self.leftn = None
@@ -93,11 +92,6 @@ def magn(v):
         return 3*magn(v.left)+2 * magn(v.right)
     return v.val
 
-def copy(v):
-    if isinstance(v, NumPair):
-        return NumPair(copy(v.left), copy(v.right))
-    return Num(v.val)
-
 def part1(inp):
     exp = add(inp[0])
     for e in inp[1:]:
@@ -107,10 +101,9 @@ def part1(inp):
     print(magn(exp))
 
 def part2(inp):
-    exp = [add(l) for l in inp]
     maxm = 0
-    for i, j in permutations(exp, 2):
-        exp = NumPair(copy(i), copy(j))
+    for i, j in permutations(inp, 2):
+        exp = NumPair(add(i), add(j))
         while explode(exp, exp) or split(exp, exp):
             pass
         maxm = max(maxm, magn(exp))

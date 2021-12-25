@@ -62,9 +62,11 @@ def bruteforce():
 #                 | CONDITION 1 and CONDITION 2
 # As such, we can generalize the rest of the instructions, while only keeping
 # the values that change across each block.
+inpcnt = 0
 Ax, Ay, Dz, limitZ = [], [], [], []
 for i in range(len(inp)):
     if 'inp' in inp[i]:
+        inpcnt += 1
         continue
     op, a, b = inp[i].split()
     b = int(b) if b not in 'wxyz' else b
@@ -77,7 +79,8 @@ for i in range(len(inp)):
         limitZ.insert(0, 26**Dz.count(1))
 
 # As there are only 14 blocks in every input (I think), we do a sanity check.
-assert len(Ax) == len(Ay) == len(Dz) == len(limitZ) == 14
+# Changed later to be generalized for any input.
+assert len(Ax) == len(Ay) == len(Dz) == len(limitZ) == inpcnt
 
 # For my input:
 # BLOCK: 0   1   2   3   4    5    6   7   8   9  10  11   12  13
@@ -175,7 +178,7 @@ def run_block(block, z, w):
 # because we know the relation between x and w.
 @cache
 def solve(z=0, block=0, Ws=range(1,10)):
-    if block > 13 or z > limitZ[block]:
+    if block >= inpcnt or z > limitZ[block]:
         if z == 0:
             return ['']
         return ''
