@@ -4,19 +4,15 @@
 cycles = ['off by one lol']
 x = 1
 for l in open(0):
-    if l.startswith('noop'):
+    if 'noop' in l:
         cycles += [x]
-    else:
+    elif 'addx' in l:
         cycles += [x, x]
-        x += int(l.split(' ')[1])
+        x += int(l.split()[1])
 
-print(sum(cycles[i]*i for i in (20, 60, 100, 140, 180, 220)))
+print(sum(cycles[i]*i for i in range(20,220+1,40)))
 
-for i in (1, 41, 81, 121, 161, 201):
-    crt = ''
-    for j in range(i, i+40):
-        if abs(cycles[j] - (j - 1) % 40) < 2:
-            crt += '@'
-        else:
-            crt += ' '
-    print(crt)
+for i in range(1, len(cycles), 40):
+    for j in range(40):
+        print(end="##" if abs(cycles[i + j] - j) <= 1 else "  ")
+    print()
