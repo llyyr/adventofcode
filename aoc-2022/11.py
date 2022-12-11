@@ -1,21 +1,20 @@
 #!/usr/bin/env python3.11
 
 inp = [g.splitlines() for g in open('11.txt').read().split('\n\n')]
-monkeys = []
-cnt = [0] * len(inp)
-mod = 1
-
-for block in inp:
-    monkey = []
-    monkey.append(list(map(int, block[1].split(': ')[1].split(', '))))
-    monkey.append(eval("lambda old:" + block[2].split('=')[1]))
-    monkey.append(v:=int(block[3].split()[-1]))
-    monkey.append(int(block[4].split()[-1]))
-    monkey.append(int(block[5].split()[-1]))
-    monkeys.append(monkey)
-    mod *= v
 
 def simulate(cycles):
+    monkeys = []
+    cnt = [0] * len(inp)
+    mod = 1
+    for block in inp:
+        monkey = []
+        monkey.append(list(map(int, block[1].split(': ')[1].split(', '))))
+        monkey.append(eval("lambda old:" + block[2].split('=')[1]))
+        monkey.append(v:=int(block[3].split()[-1]))
+        monkey.append(int(block[4].split()[-1]))
+        monkey.append(int(block[5].split()[-1]))
+        monkeys.append(monkey)
+        mod *= v
     for _ in range(cycles):
         for i, cur in enumerate(monkeys):
             for old in cur[0]:
