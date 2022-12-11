@@ -1,39 +1,34 @@
 #!/usr/bin/env python3.11
 
-def solve(iterations):
-    cur, D = 0, 1
-    starting, oper, divs, monkeys = {}, {}, {}, {0}
-    for line in open('11.txt'):
-        if "Monkey" in line:
-            monkeys |= {cur:=int(line.split()[1][:-1])}
-        elif "Starting" in line:
-            starting[cur] = list(map(int, line.split(': ')[1].split(', ')))
-        elif "Oper" in line:
-            oper[cur] = eval(f"lambda old: {line.split(' = ')[1]}")
-        elif "divisible" in line:
-            i = int(line.split()[-1])
-            D *= i
-            divs[cur] = [i]
-        elif "If" in line:
-            i = int(line.split()[-1])
-            divs[cur] += [i]
+inp = [g.splitlines() for g in open('11.txt').read().split('\n\n')]
+monkeys = []
+cnt = [0] * len(inp)
+mod = 1
 
-    cnt = [0] * len(monkeys)
+for block in inp:
+    monkey = []
+    monkey.append(list(map(int, block[1].split(': ')[1].split(', '))))
+    monkey.append(eval("lambda old:" + block[2].split('=')[1]))
+    monkey.append(v:=int(block[3].split()[-1]))
+    monkey.append(int(block[4].split()[-1]))
+    monkey.append(int(block[5].split()[-1]))
+    monkeys.append(monkey)
+    mod *= v
 
-    for _ in range(iterations):
-        for cur in monkeys:
-            div, true, false = divs[cur]
-            while starting[cur]:
-                new = oper[cur](starting[cur].pop())
-                if iterations == 20:
-                    new //= 3
+def simulate(cycles):
+    for _ in range(cycles):
+        for i, cur in enumerate(monkeys):
+            for old in cur[0]:
+                item = cur[1](old)
+                if cycles == 20:
+                    item //= 3
                 else:
-                    new %= D
-                x = (true, false)[new % div != 0]
-                starting[x].append(new)
-                cnt[cur] += 1
+                    item %= mod
+                monkeys[cur[3 if item % cur[2] == 0 else 4]][0].append(item)
+            cnt[i] += len(cur[0])
+            cur[0].clear()
     cnt.sort()
     return cnt[-1] * cnt[-2]
 
-print(solve(20))
-print(solve(10000))
+print(simulate(20))
+print(simulate(10000))
