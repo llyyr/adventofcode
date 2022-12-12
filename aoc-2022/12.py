@@ -1,12 +1,12 @@
 #!/usr/bin/env python3.11
 
+from collections import deque, defaultdict
 
-from collections import deque
+inp = [l.rstrip() for l in open('12.txt')]
+R, C = len(inp), len(inp[0])
+starts, G, dist = [], {}, defaultdict(lambda: 1e5)
 
-
-G, dist = [], []
-for r, line in enumerate(open('12.txt')):
-    row = []
+for r, line in enumerate(inp):
     for c, char in enumerate(line):
         if char == 'S':
             char = 'a'
@@ -14,31 +14,20 @@ for r, line in enumerate(open('12.txt')):
         elif char == 'E':
             char = 'z'
             end = (r, c)
-        row.append(ord(char) - ord('a'))
-    G.append(row)
-    dist.append([1e5 for _ in range(len(row))])
+        if char == 'a':
+            dist[r, c] = 0
+            starts.append((r, c))
+        G[r, c] = ord(char) - ord('a')
 
-R = len(G)
-C = len(G[0])
-
-def solve(part2=False):
-    Q = deque([start])
-    dist[start[0]][start[1]] = 0
-    if part2:
-        for r in range(R):
-            for c in range(C):
-                if G[r][c] == 0:
-                    Q.append((r, c))
-                    dist[r][c] = 0
+def solve(start):
+    Q = deque([l for l in start])
     while Q:
         r, c = Q.popleft()
-        for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-            rr, cc = r + dr, c + dc
-            if 0<=rr<R and 0<=cc<C and G[rr][cc]<=1+G[r][c]:
-                if dist[r][c]+1 < dist[rr][cc]:
-                    dist[rr][cc] = min(dist[rr][cc], dist[r][c]+1)
-                    Q.append((rr, cc))
+        for nr, nc in ((r, c+1), (r, c-1), (r+1, c), (r-1, c)):
+            if 0 <= nr < R and 0 <= nc < C and G[nr, nc] <= 1+G[r, c]:
+                if dist[r, c]+1 < dist[nr, nc]:
+                    dist[nr, nc] = min(dist[nr, nc], 1+dist[r, c])
+                    Q.append((nr, nc))
+    return dist[end]
 
-    return dist[end[0]][end[1]]
-
-print(*map(solve, (False, True)))
+print(*map(solve, ([start], starts)))
