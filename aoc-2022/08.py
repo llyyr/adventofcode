@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.11
 
-G = [[*map(int, l.rstrip())] for l in open(0)]
+G = [[*map(int, l.rstrip())] for l in open('08.txt')]
 C, R = len(G[0]), len(G)
 p1, p2 = 0, 0
 

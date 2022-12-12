@@ -3,11 +3,11 @@
 
 cycles = ['off by one lol']
 x = 1
-for l in open(0):
+for l in open('10.txt'):
     if 'noop' in l:
-        cycles += [x]
+        cycles.append(x)
     elif 'addx' in l:
-        cycles += [x, x]
+        cycles.extend([x, x])
         x += int(l.split()[1])
 
 print(sum(cycles[i]*i for i in range(20,220+1,40)))

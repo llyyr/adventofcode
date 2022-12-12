@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.11
 
 
-inp = [l.split() for l in open(0)]
+inp = [l.split() for l in open('09.txt')]
 DIRS = {'L': (-1, 0), 'R': (1, 0), 'U': (0, 1), 'D': (0, -1)}
 
 def solve(length):

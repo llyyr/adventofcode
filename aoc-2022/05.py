@@ -6,7 +6,7 @@ inp = open('05.txt').read().split('\n\n')
 def calc(mode):
     stacks = []
     for line in inp[0].split('\n'):
-        if line.strip().startswith("1"):
+        if line.strip().startswith('1'):
             break
         for i, val in enumerate(line):
             if 'A' <= val <= 'Z':
@@ -28,7 +28,7 @@ def calc(mode):
             temp = []
             for _ in range(steps[0]):
                 temp.append(stacks[steps[1]-1].pop())
-            stacks[steps[2]-1] += temp[::-1]
+            stacks[steps[2]-1].extend(temp[::-1])
 
     print(''.join(ret[-1] for ret in stacks))
 
