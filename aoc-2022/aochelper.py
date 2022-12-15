@@ -1,3 +1,22 @@
+from timeit import default_timer
+from functools import wraps
+
+
+DIRS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+DIRMAP = {'L': (-1, 0), 'R': (1, 0), 'U': (0, 1), 'D': (0, -1)}
+
+
+def timer(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        t0 = default_timer()
+        out = func(*args, **kwargs)
+        t1 = default_timer()
+        print(f"{func.__name__} took {(t1-t0)*1000:.3f} ms")
+        return out
+    return wrapper
+
+
 def ints(s):
     """
     Extract numbers from a string.
