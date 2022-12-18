@@ -2,7 +2,8 @@
 
 from aochelper import *
 
-inp = cycle(enumerate(({'>': 1, '<': -1}[c] for c in open('17.txt').read().strip())))
+inp = cycle(enumerate(({'>': 1, '<': -1}[c]
+                       for c in open('17.txt').read().strip())))
 pieces = cycle(enumerate((
     ((0, 0), (1, 0), (2, 0), (3, 0)),
     ((1, 0), (1, -1), (0, -1), (1, -2), (2, -1)),
@@ -24,10 +25,11 @@ while i < L:
     W = max(x for x, _ in piece) + 1
     x, y = 2, H - 4
     while True:
-        if all((x + dx + inst, y + dy) not in G for dx, dy in piece) and {1: x < 7 - W, -1: x > 0}[inst]:
+        if all((x + dx + inst, y + dy) not in G
+               for dx, dy in piece) and {1: x < 7 - W, -1: x > 0}[inst]:
             x += inst
         if any((x + dx, y + dy + 1) in G for dx, dy in piece):
-            G |= {(x+dx, y+dy) for dx, dy in piece}
+            G |= {(x + dx, y + dy) for dx, dy in piece}
             break
         y += 1
         inst_idx, inst = next(inp)
