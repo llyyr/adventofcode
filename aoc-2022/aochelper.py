@@ -5,6 +5,11 @@ from itertools import *
 from copy import deepcopy
 import sys
 
+class EqualToAny(object):
+    def __eq__(self, other):
+        return True
+
+
 DIRS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
 DIRMAP = {'L': (-1, 0), 'R': (1, 0), 'U': (0, 1), 'D': (0, -1)}
 
