@@ -6,7 +6,7 @@ G, insts = open('22.txt').read().split('\n\n')
 G = G.splitlines()
 R = len(G)
 C = lambda c: len(G[c])
-insts = re.findall('\d+|L|R', insts)
+insts = [''.join(v) for _, v in itertools.groupby(insts.strip(), str.isdigit)]
 
 DIRS = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 FACEMAP = {'L': -1, 'R': 1}

@@ -2,6 +2,7 @@ from timeit import default_timer
 from functools import wraps, reduce, partial, cache, cmp_to_key
 from collections import Counter, deque, defaultdict, namedtuple
 from itertools import *
+import itertools
 from copy import deepcopy
 import re
 import sys
