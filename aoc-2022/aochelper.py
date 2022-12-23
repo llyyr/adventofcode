@@ -11,17 +11,24 @@ class EqualToAny(object):
     def __eq__(self, other):
         return True
 
-
-DIRS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+DIRS = ((-1, 0), (1, 0), (0, 1), (0, -1))
 DIRMAP = {'L': (-1, 0), 'R': (1, 0), 'U': (0, 1), 'D': (0, -1)}
+NEIGHBOURS = tuple(itertools.product((-1, 0, 1), repeat=2))
 
 def neighbours(x=0, y=0, amount=4):
-    assert amount in (4, 8, 9)
-    for dy, dx in itertools.product((-1, 0, 1), repeat=2):
+    for dy, dx in NEIGHBOURS:
         if ((amount == 4 and abs(dx) != abs(dy)) or
             (amount == 8 and not dx == dy == 0) or
              amount == 9):
             yield (x+dx, y+dy)
+
+def hash2coords(inp):
+    coords = set()
+    for y, line in enumerate(inp.splitlines()):
+        for x, c in enumerate(line):
+            if c == '#':
+                coords.add((x, y))
+    return coords
 
 def timer(func):
     @wraps(func)
@@ -36,16 +43,10 @@ def timer(func):
 
 def ints(s):
     """
-    Extract numbers from a string.
-
-    Examples
-    --------
     >>> ints("Hello4.2this.is random 24 text42")
     [4.2, 24, 42]
-
     >>> ints("2.3+45-99")
     [2.3, 45, -99]
-
     >>> ints("Avogadro's number, 6.022e23, is greater than 1 million.")
     [6.022e+23, 1]
     """
