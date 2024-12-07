@@ -52,12 +52,12 @@ class timer:
             elapsed_time = t1 - t0
             self.total_time += elapsed_time
             self.call_count += 1
-            self.name = func.__name__
             if self.auto_print:
                 print(f"{func.__name__} took {elapsed_time * 1000:.3f} ms")
             return out
 
-        wrapper.print_time = self.print_time
+        self.name = func.__name__
+        wrapper.print_time = self.print_time # type: ignore
         return wrapper
 
     def print_time(self):
