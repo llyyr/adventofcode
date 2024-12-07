@@ -36,15 +36,32 @@ def hash2coords(inp):
                 coords.add((r, c))
     return coords
 
-def timer(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        t0 = default_timer()
-        out = func(*args, **kwargs)
-        t1 = default_timer()
-        print(f"{func.__name__} took {(t1-t0)*1000:.3f} ms")
-        return out
-    return wrapper
+class timer:
+    def __init__(self, auto_print=False):
+        self.auto_print = auto_print
+        self.total_time = 0
+        self.call_count = 0
+        self.name = None
+
+    def __call__(self, func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            t0 = default_timer()
+            out = func(*args, **kwargs)
+            t1 = default_timer()
+            elapsed_time = t1 - t0
+            self.total_time += elapsed_time
+            self.call_count += 1
+            self.name = func.__name__
+            if self.auto_print:
+                print(f"{func.__name__} took {elapsed_time * 1000:.3f} ms")
+            return out
+
+        wrapper.print_time = self.print_time
+        return wrapper
+
+    def print_time(self):
+        print(f"{self.name} took {self.total_time * 1000:.3f} ms over {self.call_count} calls")
 
 def ints(s):
     return [int(s) for s in re.findall(r'-?\d+', s)]
