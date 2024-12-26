@@ -37,6 +37,13 @@ def hash2coords(inp):
                 coords.add((r, c))
     return coords
 
+def grid2dict(inp):
+    G = {}
+    for r, line in enumerate(inp):
+        for c, ch in enumerate(line):
+            G[(r, c)] = ch
+    return G, len(inp), len(inp[0])
+
 class timer:
     def __init__(self, auto_print=False):
         self.auto_print = auto_print
